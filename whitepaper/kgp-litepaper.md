@@ -1,240 +1,206 @@
-# Khalsa Governance Protocol (KGP)
-### Litepaper (v0.1, 2025)  
-*A Decentralised Governance & Seva Infrastructure for the Global Sikh Panth*
+# Khalsa Governance Protocol (KGP)  
+### Litepaper v0.2 — 2025  
+*A Decentralised Governance & Seva Coordination Framework for the Global Sikh Panth*  
 
 ---
 
 # 1. Overview
 
-The **Khalsa Governance Protocol (KGP)** is a decentralised governance and seva (charitable) coordination framework for the global Sikh Panth. KGP does not replace Gurdwaras, committees, or Sikh institutions. Instead, it delivers **neutral, transparent, cryptographically sound tools** that Sikh bodies can use when they choose.
+The **Khalsa Governance Protocol (KGP)** is a decentralised, identity-aware governance and seva (charity) coordination system for the global Sikh Panth. It does not replace Gurdwaras or Sikh institutions. Instead, it provides **neutral, transparent, cryptographically-verifiable infrastructure** that institutions and Sangat may adopt voluntarily.
 
-KGP provides:
+KGP delivers:
 
-- **Khalsa ID (SBT):** Verified Sikh identity
-- **KHL Token:** Non-transferable governance access token
-- **Seva Treasury:** Multisig-controlled seva funds
-- **Snapshot → ZK-MACI:** Staged governance evolution
-- **Ethereum + Arbitrum security:** Transparent, verifiable decision systems
+- **Khalsa ID (SBT):** Verified Sikh identity (non-transferable).  
+- **Role SBTs:** Committee roles, maintainers, issuers, membership, and permissions.  
+- **KHL Token:** Non-transferable governance access token (fixed price, buy-only).  
+- **Seva Treasury Safe:** Transparent custody of seva funds.  
+- **Snapshot Governance (v1):** Identity-gated voting.  
+- **MACI Governance (v2):** Zero-knowledge, anti-collusion voting.  
+- **Provenance Layer:** Event-based audit trails across identity, governance, and treasury.
 
-Its purpose is to align Sikh governance with Sikh ethics: *Sarbat da Bhala* (Universal Welfare), *Seva* (Selfless Service), truth, fairness, humility, and collective decision making.
-
----
-
-# 2. Why KGP?
-
-Sikh governance today is fragmented. Thousands of Gurdwaras operate independently with varying processes and no shared digital infrastructure. Challenges include:
-
-- No global digital Sikh identity  
-- No transparent digital seva funding  
-- No secure, Sybil-resistant online voting  
-- No coordination across organisations  
-- No mechanism for global Panthic consultation  
-
-KGP addresses these gaps through:
-
-1. **Khalsa ID** → Verified Sikh identity credential  
-2. **KHL Token** → Governance access, non-transferable  
-3. **Safes** → Transparent multisig-based execution  
-4. **MACI** → Anti-collusion cryptographic voting  
-
-This provides the Panth with an ethical, trust-minimised digital governance substrate.
+KGP aligns with Sikh ethics: *Sarbat da Bhala* (universal welfare), *Seva* (selfless service), *Sat* (truth), *Nimrata* (humility), and collective decision making.
 
 ---
 
-# 3. Architecture Summary
+# 2. Motivation
 
-KGP is deployed across **Ethereum L1** and **Arbitrum L2**.
+Sikh institutions conduct vast seva but lack shared digital infrastructure. Problems commonly seen across the global Panth include:
 
-![KGP Unified Architecture Diagram](diagrams/system-architecture-kgp.svg)
+### • Fragmented governance  
+Thousands of Gurdwaras operate independently with no shared digital standards, making cross-institution coordination difficult.
 
----
+### • No verified digital identity  
+There is no global, privacy-preserving way to prove “I am a Sikh” in online governance or seva allocations.
 
-## 3.1 Ethereum L1 — Root Layer
+### • No transparent, auditable treasury layer  
+Donors often cannot see how funds are allocated, and institutions lack cryptographically verifiable transparency.
 
-The L1 layer acts as the *constitutional foundation*.
+### • No secure digital voting  
+There is no Panthically aligned method to hold Sybil-resistant, tamper-proof, coercion-resistant online votes.
 
-### Components
+### • No provenance  
+Decisions, identity issuance, and treasury actions are not linked by an immutable chain of governance reasoning.
 
-**L1 Governance Safe**  
-- Panj Pyare–style (5 member) multisig  
-- Controls the root configuration
-
-**KhalsaRootL1 Contract**  
-- Stores global `MAX_SUPPLY` for KHL  
-- Registers authorised L2 contracts  
-- Defines upgrade authority boundaries  
-
-This layer is minimal and stable.
+KGP addresses these gaps while respecting existing maryada, constitutional structures, and institutional autonomy.
 
 ---
 
-## 3.2 Arbitrum L2 — Execution Layer
+# 3. Architectural Summary
 
-All active interaction occurs on L2 to minimise costs and improve UX.
+KGP is implemented entirely on **Arbitrum L2**, enabling low-cost, scalable, and verifiable governance without the complexity of maintaining an L1/L2 split.
 
-### Core Contracts
+### Core Components
 
-**KHL Token (non-transferable ERC-20 style)**  
-- Minted at a fixed price (10 USDT)  
-- Non-transferable: prevents vote buying and speculation  
-- Holding ≥1 KHL enables governance participation
+**1. Identity Layer (Khalsa ID + Role SBTs)**  
+- Khalsa ID: Verified Sikh identity (ERC-1155 SBT).  
+- Role SBTs: Committee, maintainer, issuer, regional, and project roles.
 
-**Buy-Only Contract**  
-- Enforces whitelist-only access  
-- Forwards all stablecoins directly to the Seva Treasury Safe  
-- Cannot redeem KHL; no sell-back mechanism
+**2. Token Layer (KHL)**  
+- Buy-only, non-transferable ERC-20 style token.  
+- Fixed price: **10 USDT**.  
+- Purpose: governance access (not financial).  
+- Holding ≥1 KHL grants governance participation.
 
-**Khalsa ID (SBT)**  
-- Verified Sikh identity credential  
-- Required for Panthic governance matters
+**3. Governance Layer**  
+- **v1:** Snapshot with SBT/KHL eligibility checks.  
+- **v2:** MACI for ZK, anti-coercion, private voting.  
+- **L2 Governance Safe:** Executes approved proposals.
 
-**Issuer Registry**  
-- Authorised Sikh institutions may mint Khalsa ID  
-- Managed by governance
+**4. Treasury Layer**  
+- Seva Treasury Safe: Multisig holding all stablecoins from KHL mints.  
+- All treasury actions require governance approval.  
+- Full on-chain provenance.
 
-**L2 Governance Safe**  
-- Executes all approved governance decisions  
-- Updates issuer registry, whitelists, contract configs
+**5. Provenance Layer**  
+Event-based lineage linking:
 
-**Seva Treasury Safe**  
-- Multisig custody of all stablecoins  
-- Controlled exclusively via governance-approved Safe transactions
-
----
-
-# 4. Governance Lifecycle
-
-KGP governance evolves in phases:
+- Identity → Issuer → Governance → Execution → Treasury  
+- Every action has a `decisionId` or `contextId` anchor.
 
 ---
 
-## 4.1 Phase 1 — Snapshot Voting (MVP)
+# 4. Identity & Role System (SBTs)
 
-- Eligibility:  
-  - Technical proposals → ≥1 KHL  
-  - Panthic proposals → ≥1 KHL + Khalsa ID  
-- Off-chain vote tally  
-- On-chain execution via L2 Governance Safe
+KGP separates **identity** from **roles**, avoiding conflation of Sikh identity with institutional authority.
+
+## 4.1 Khalsa ID (Identity)
+- ERC-1155 SBT  
+- Token ID: `1`  
+- Issued only by approved Sikh institutions  
+- Non-transferable; revocable by issuer + governance  
+- Required for Panthic governance proposals
+
+## 4.2 Role SBTs (Permissions)
+All roles are separate SBT IDs:
+
+- **Issuer SBT (2001):** Can mint Khalsa ID  
+- **Maintainer SBT (1001):** Can create protocol proposals  
+- **Committee SBTs (4000–4099 per Gurdwara):** Local governance roles  
+- **Membership SBTs:** For local Gurdwara voting  
+- **Panj Pyare SBT (9001):** L2 Governance Safe signer  
+
+Institutions receive their own SBT namespaces and maintain full autonomy.
 
 ---
 
-## 4.2 Phase 2 — Controlled Expansion
+# 5. KHL Token Model
 
-- Trusted inviter network  
-- Strict whitelist controls  
-- Gurdwaras or Sikh institutions may participate
+**Purpose:** governance access, not financial value.
+
+- **Non-transferable** (anti-speculation, anti-vote buying)  
+- **Fixed price:** 10 USDT  
+- **Minting:** Buy-only contract  
+- **Redemption:** None (no sell-back)  
+- **Supply cap:** 96 crore (960 million)  
+- **Role:** holding ≥1 KHL enables governance participation
+
+This model ensures fairness: all Sikhs pay the same amount for participation, at any time.
 
 ---
 
-## 4.3 Phase 3 — ZK-MACI Governance
+# 6. Governance Lifecycle
 
-**MACI (Minimum Anti-Collusion Infrastructure)**:  
+KGP uses a staged governance evolution:
+
+## 6.1 Phase 1 — Snapshot Governance (MVP)
+- Off-chain voting (gasless for users)  
+- Eligibility controlled by SBT + KHL strategies  
+- Proposal categories:
+  - Technical proposals (≥1 KHL)  
+  - Panthic + Treasury proposals (≥1 KHL + Khalsa ID)  
+- Proposal creation:
+  - Technical: Maintainers + Panj Pyare  
+  - Treasury: Any Sikh (KHL + Khalsa ID) with N endorsements  
+  - Gurdwara: Committee SBT holders  
+
+## 6.2 Phase 2 — MACI (Zero-Knowledge Governance)
 - Encrypted ballots  
-- Zero-knowledge verified tally  
-- Prevents vote buying and coercion  
-- Ensures one-person-one-vote privacy  
-- Strong Sybil resistance
+- Anti-coercion  
+- Private voting  
+- ZK proof of correct tally  
+- Strong Sybil resistance  
 
-This becomes the long-term governance mode.
-
----
-
-## 4.4 Phase 4 — Institutional Adoption
-
-Gurdwaras and Sikh organisations may optionally use KGP to:
-
-- manage internal elections  
-- transparently allocate seva funds  
-- coordinate projects with other institutions  
-- run local and regional consultations  
-
-KGP remains neutral and non-political.
+MACI replaces Snapshot for sensitive votes.
 
 ---
 
-# 5. Token Model — KHL
+# 7. Treasury Architecture
 
-### Key Properties
+All stablecoins from KHL purchases flow into:
 
-- **Supply:** Fixed maximum of 96 crore (960,000,000)  
-- **Price:** Fixed 10 USDT per KHL  
-- **Minting:** Only via Buy-Only contract  
-- **Transferability:** Disabled (non-transferable)  
-- **Redemption:** No sell-back, no liquidity pools  
-- **Nature:** Non-financial governance access token  
-- **Rights:** No profit-sharing, no yield, no claims
+## **Seva Treasury Safe (L2)**
+- Multisig Safe  
+- Only moves funds through governance-approved transactions  
+- All transfers emit `TreasuryTransfer` provenance events  
 
-### Why Non-Transferable?
-
-- Prevent vote buying  
-- Prevent accumulation of influence  
-- Enforce equal weighting  
-- Remove speculative incentives  
-- Align with Sikh ethical principles
-
-KHL signals **participation**, not wealth.
+Treasury usage is transparent, auditable, and community-driven.
 
 ---
 
-# 6. Identity Layer — Khalsa ID
+# 8. Provenance & Auditability
 
-**Khalsa ID** is a Soulbound Token proving Sikh identity.
+KGP creates an immutable lineage of:
 
-### Characteristics
+- Identity issuance  
+- Role changes  
+- KHL minting  
+- Proposal registration  
+- Governance decisions  
+- Treasury movements  
+- Protocol upgrades  
 
-- Issued by approved Sikh institutions  
-- Zero personal data stored on-chain  
-- Required for Panthic proposals  
-- Non-transferable  
-- Extensible (committee roles, seva roles, membership SBTs)
+Through structured events:
 
-### Workflow
+- `KhalsaIdIssued`  
+- `RoleGranted` / `RoleRevoked`  
+- `KhlMinted`  
+- `MinterWhitelistUpdated`  
+- `ProposalRegistered`  
+- `ProposalExecuted`  
+- `TreasuryTransfer`  
 
-1. Sikh presents for verification (offline)  
-2. Institution checks identity using its own process  
-3. Institution mints Khalsa ID SBT  
-4. Wallet becomes eligible for Panthic voting
+Each event includes:
 
-This preserves local autonomy and maryada.
+- `decisionId` = governance proposal that authorised the action  
+- `contextId` = additional metadata (invite code, institution, region)  
+- `contextURI` = optional IPFS/Arweave links  
 
----
-
-# 7. Treasury Flow
-
-Every KHL purchase directs stablecoins to:
-
-### **Seva Treasury Safe**
-
-- Multisig Safe on Arbitrum  
-- Publicly auditable  
-- Funds only released through governance  
-- No redemption risk  
-- No speculation  
-
-A typical flow:
-
-1. Address whitelisted  
-2. Buyer pays 10 USDT per KHL  
-3. Buy-Only contract mints KHL + sends USDT → Treasury Safe  
-4. Treasury disbursement only after governance approval  
-5. Governance Safe executes spend transaction on-chain
-
-This ensures **full transparency** and complete separation of **decision-making** and **custody**.
+This enables complete reconstructability of “how did we get here?”  
+— a foundational requirement for Panthic legitimacy.
 
 ---
 
-# 8. Security Model
+# 9. Security Model
 
-KGP is secured by:
+KGP relies on:
 
-- Ethereum L1  
-- Arbitrum L2  
-- Multisig Safes  
+- Arbitrum L2 security guarantees  
+- Safe multisigs  
 - Non-transferable tokens  
-- SBT-based identity limits  
-- Strict contract permissions  
-- MACI (future)  
-- Conservative upgradeability
+- Identity-gated participation  
+- Event-based provenance  
+- Conservative upgradeability  
+- MACI for coercion-resistant governance  
 
 Threats mitigated:
 
@@ -243,73 +209,40 @@ Threats mitigated:
 - Committee capture  
 - Identity fraud  
 - Treasury misuse  
-- Governance coercion  
-- Speculative market manipulation
+- Protocol-level tampering  
 
 ---
 
-# 9. Non-Political, Panthic-Aligned Design
+# 10. Ethical & Panthic Alignment
 
-KGP:
+KGP preserves and strengthens:
 
-- Is not a political institution  
-- Does not replace Gurdwaras or any Sikh organisations  
-- Does not impose identity verification requirements  
-- Is optional, open-source infrastructure  
-- Follows Sikh values: truth, seva, accountability, equality  
+- **Sarbat da Bhala** — welfare of all  
+- **Seva** — selfless contribution  
+- **Nimrata** — humility; no centralised power  
+- **Collective governance** — one-person-one-vote fairness  
+- **Transparency** — open donor accountability  
+- **Autonomy** — no interference with Gurdwaras or institutions  
 
-It is simply a **digital toolset** the Sangat may use to strengthen governance and seva transparency.
-
----
-
-# 10. Summary
-
-KGP provides:
-
-- Verified Sikh identity (Khalsa ID)  
-- Transparent, accountable seva treasury  
-- Non-transferable governance token (KHL)  
-- Anti-collusion cryptographic voting (MACI)  
-- Open-source tools for Sikh institutions  
-- A neutral, Panthically grounded governance substrate  
-
-It is a foundation for future Panthic coordination—flexible, transparent and aligned with Sikh values.
+KGP is a tool — not an authority.  
+It is optional, open-source, non-political, and non-extractive.
 
 ---
 
-# Glossary
+# 11. Glossary
 
-**Panth**  
-The global Sikh collective community.
-
-**Sarbat da Bhala**  
-“Universal welfare” — the principle that all actions should aim to uplift humanity.
-
-**Seva**  
-Selfless service performed without desire for personal gain.
-
-**Panj Pyare**  
-“The Five Beloved Ones” — the original five Khalsa initiates; symbolically represents collective leadership in Sikh tradition.
-
-**Maryada**  
-Sikh code of conduct and discipline, often used to describe a Gurdwara’s established practices.
-
-**Gurdwara**  
-Sikh place of learning and worship; community hub.
-
-**Khalsa**  
-The community of formally initiated Sikhs committed to Sikh values and discipline.
-
-**Khalsa ID**  
-In the context of KGP, a soulbound token verifying Sikh identity.
-
-**Sangat**  
-The collective community of individuals engaged in Sikh spiritual fellowship.
+**Khalsa ID:** SBT proving Sikh identity.  
+**SBT:** Soulbound token (non-transferable).  
+**KHL:** Governance access token.  
+**Panj Pyare:** Collective leadership (5 signers).  
+**MACI:** Zero-knowledge voting system.  
+**Snapshot:** Off-chain voting platform.  
+**Seva:** Selfless service.  
+**Sarbat da Bhala:** Welfare of all.  
 
 ---
 
-# Contact & Repository
+# 12. Repository & Contact
 
-**GitHub:** https://github.com/sarbloc/khalsa-governance-protocol
-
-**Maintainer:** [sarbloc](https://github.com/sarbloc)
+**GitHub:** https://github.com/sarbloc/khalsa-governance-protocol  
+**Maintainer:** sarbloc  
