@@ -22,26 +22,32 @@ KGP aligns with Sikh ethics: *Sarbat da Bhala* (universal welfare), *Seva* (self
 
 ```mermaid
 flowchart TB
-    subgraph IDLayer[Identity Layer]
-        KID[Khalsa ID (SBT)]
-        RSBT[Role SBTs<br>- Issuers<br>- Maintainers<br>- Committee Roles<br>- Membership]
+
+    %% --- Identity Layer ---
+    subgraph IDLayer["Identity Layer"]
+        KID["Khalsa ID (SBT)"]
+        RSBT["Role SBTs (Issuers, Maintainers, Committee Roles, Membership)"]
     end
 
-    subgraph TokenLayer[Token Layer]
-        KHL[KHL Token<br>(Non-transferable)]
-        BO[Buy-Only Minter<br>Fixed 10 USDT]
+    %% --- Token Layer ---
+    subgraph TokenLayer["Token Layer"]
+        KHL["KHL Token (Non-transferable)"]
+        BO["Buy-Only Minter (10 USDT Fixed Price)"]
     end
 
-    subgraph GovLayer[Governance Layer]
-        SNAP[Snapshot (v1)]
-        MACI[MACI (v2)]
-        GOVSAFE[L2 Governance Safe<br>Panj Pyare Multisig]
+    %% --- Governance Layer ---
+    subgraph GovLayer["Governance Layer"]
+        SNAP["Snapshot (Phase 1)"]
+        MACI["MACI (Phase 2)"]
+        GOVSAFE["L2 Governance Safe (Panj Pyare)"]
     end
 
-    subgraph TreasuryLayer[Treasury Layer]
-        TRESAFE[Seva Treasury Safe<br>Multisig]
+    %% --- Treasury Layer ---
+    subgraph TreasuryLayer["Treasury Layer"]
+        TRESAFE["Seva Treasury Safe (Multisig)"]
     end
 
+    %% --- Connections ---
     IDLayer --> SNAP
     IDLayer --> MACI
 
